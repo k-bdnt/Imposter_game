@@ -2,101 +2,180 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لعبة من المحتال؟ 🎭 - النسخة المحدثة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
+  <title>🎭 لعبة من المحتال؟ - النسخة المحدثة Ultra</title>
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --bg-gradient: radial-gradient(circle at 50% -20%, #2e1065, #0f172a 60%, #020617);
+      --card-bg: rgba(30, 41, 59, 0.65);
+      --card-border: rgba(255, 255, 255, 0.15);
+      --card-highlight: rgba(255, 255, 255, 0.25);
+      --accent-purple: #a855f7;
+      --accent-glow: rgba(168, 85, 247, 0.45);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --player-dynamic-color: #a855f7;
+      --starter-dynamic-color: #a855f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f1f5f9;
-      color: #0f172a;
+      background: var(--bg-gradient);
+      color: var(--text-main);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
       padding: 16px;
-      padding-bottom: 90px;
+      padding-bottom: 95px;
       user-select: none;
       -webkit-user-select: none;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* أنيميشن عند الضغط على الشاشة */
+    /* خلفية متفاعلة بلورية ضوئية Ultra Aurora Background */
+    body::before, body::after {
+      content: '';
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      z-index: -1;
+      opacity: 0.6;
+      animation: floatGlow 12s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    }
+    body::before {
+      width: 350px;
+      height: 350px;
+      background: var(--player-dynamic-color);
+      top: -80px;
+      right: -80px;
+      transition: background 0.8s ease;
+    }
+    body::after {
+      width: 420px;
+      height: 420px;
+      background: #3b82f6;
+      bottom: -100px;
+      left: -100px;
+      animation-delay: -6s;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+      50% { transform: translate(40px, 30px) scale(1.2) rotate(180deg); }
+      100% { transform: translate(-20px, 50px) scale(1.05) rotate(360deg); }
+    }
+
+    /* تأثير اللمس Ripple */
     .tap-ripple {
       position: fixed;
       border-radius: 50%;
-      background: rgba(124, 58, 237, 0.35);
+      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(168,85,247,0.4) 100%);
       transform: scale(0);
-      animation: rippleEffect 0.5s ease-out forwards;
+      animation: rippleEffect 0.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
       pointer-events: none;
       z-index: 9999;
     }
 
     @keyframes rippleEffect {
       to {
-        transform: scale(3.5);
+        transform: scale(4);
         opacity: 0;
       }
     }
 
-    body::before, body::after {
-      content: '';
-      position: fixed;
-      border-radius: 50%;
-      background: rgba(124, 58, 237, 0.05);
-      z-index: -1;
-      transition: all 0.5s ease;
-    }
-    body::before { width: 350px; height: 350px; top: -100px; right: -50px; }
-    body::after { width: 400px; height: 400px; bottom: -150px; left: -100px; }
-
+    /* الكارت الرئيسي (Ultra Glassmorphism) */
     .card {
-      background: #ffffff;
-      border-radius: 28px;
+      background: var(--card-bg);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--card-border);
+      border-top: 1px solid var(--card-highlight);
+      border-radius: 36px;
       padding: 24px;
       width: 100%;
       max-width: 480px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0,0,0,0.3);
       text-align: center;
       position: relative;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.2s ease;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       overflow: hidden;
     }
 
     @keyframes popIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity: 0; transform: scale(0.92) translateY(15px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* زر الخروج من الجولة */
+    .exit-round-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      width: auto;
+      backdrop-filter: blur(10px);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 10;
+    }
+
+    .exit-round-btn:hover {
+      background: #ef4444;
+      color: #ffffff;
+      border-color: #ef4444;
+      box-shadow: 0 0 18px rgba(239, 68, 68, 0.5);
+      transform: scale(1.05);
     }
 
     h1 {
-      margin-top: 0;
+      margin-top: 5px;
+      margin-bottom: 20px;
       font-size: 26px;
-      color: #0f172a;
-      font-weight: 800;
+      color: #ffffff;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
 
-    /* تحسين مظهر خانة الصح Checkbox */
+    /* خانة الاختيار Checkbox */
     input[type="checkbox"] {
       appearance: none;
       -webkit-appearance: none;
       width: 22px;
       height: 22px;
-      border: 2px solid #cbd5e1;
-      border-radius: 6px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
       outline: none;
       cursor: pointer;
       position: relative;
-      background-color: #ffffff;
-      transition: all 0.2s ease;
+      background-color: rgba(15, 23, 42, 0.6);
+      transition: all 0.25s ease;
       flex-shrink: 0;
     }
 
     input[type="checkbox"]:checked {
-      background-color: var(--player-dynamic-color, #7c3aed);
-      border-color: var(--player-dynamic-color, #7c3aed);
+      background-color: var(--player-dynamic-color);
+      border-color: var(--player-dynamic-color);
+      box-shadow: 0 0 12px var(--player-dynamic-color);
     }
 
     input[type="checkbox"]:checked::after {
@@ -110,57 +189,62 @@
       transform: translate(-50%, -50%);
     }
 
+    /* شريط التقدم النيون */
     .top-progress-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
       gap: 12px;
+      margin-top: 10px;
     }
 
     .progress-track {
       flex: 1;
-      height: 8px;
-      background: #e2e8f0;
-      border-radius: 10px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
       overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
     }
 
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: var(--player-dynamic-color, #7c3aed);
-      border-radius: 10px;
-      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+      background: linear-gradient(90deg, var(--player-dynamic-color), #3b82f6);
+      border-radius: 20px;
+      box-shadow: 0 0 15px var(--player-dynamic-color);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .player-step-badge {
-      background: #ffffff;
-      color: #0f172a;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
       padding: 6px 14px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: bold;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
 
-    /* ========================================================= */
-    /* تأثير قلب البطاقة 3D (3D Flip Card Effect) */
-    /* ========================================================= */
+    /* قلب البطاقة 3D */
     .flip-card-perspective {
-      perspective: 1000px;
+      perspective: 1200px;
       width: 100%;
-      min-height: 290px;
-      margin: 10px 0;
+      min-height: 320px;
+      margin: 15px 0;
     }
 
     .player-card-box {
       width: 100%;
       height: 100%;
-      min-height: 290px;
+      min-height: 320px;
       position: relative;
       transform-style: preserve-3d;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
       cursor: pointer;
       touch-action: none;
     }
@@ -175,72 +259,75 @@
       height: 100%;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      border-radius: 28px;
+      border-radius: 30px;
       padding: 24px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-top: 1px solid rgba(255, 255, 255, 0.4);
     }
 
-    /* الوجه الأمامي */
     .card-front {
-      background: var(--player-dynamic-color, #7c3aed);
-      background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.08) 0, rgba(255, 255, 255, 0.08) 10px, transparent 0, transparent 20px);
+      background: linear-gradient(135deg, var(--player-dynamic-color) 0%, rgba(15, 23, 42, 0.95) 100%);
       color: #ffffff;
     }
 
-    /* الوجه الخلفي (مطابق للون اللاعب مع تحسين التباين) */
     .card-back {
-      background: var(--player-dynamic-color, #7c3aed);
-      background-image: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.1) 100%);
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, var(--player-dynamic-color) 100%);
       color: #ffffff;
-      border: 3px solid rgba(255, 255, 255, 0.4);
       transform: rotateY(180deg);
+      border: 2px solid var(--player-dynamic-color);
+      box-shadow: 0 0 30px var(--player-dynamic-color);
     }
 
     .avatar-icon-box {
-      width: 65px;
-      height: 65px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 26px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 30px;
-      backdrop-filter: blur(5px);
+      font-size: 38px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       pointer-events: none;
       transition: transform 0.3s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
 
     .player-card-box:hover .avatar-icon-box { transform: scale(1.1) rotate(5deg); }
 
     .player-card-box h2 {
       margin: 0;
-      font-size: 26px;
-      font-weight: 800;
+      font-size: 28px;
+      font-weight: 900;
       pointer-events: none;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
     }
 
     .click-icon-circle {
       width: 55px;
       height: 55px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.15);
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 24px;
       backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       pointer-events: none;
-      animation: bounce 1.5s infinite;
+      animation: pulseGlow 1.8s infinite ease-in-out;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+    @keyframes pulseGlow {
+      0%, 100% { transform: translateY(0) scale(1); box-shadow: 0 0 0 rgba(255,255,255,0); }
+      50% { transform: translateY(-8px) scale(1.05); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
     }
 
     .secret-card-content {
@@ -249,61 +336,66 @@
     }
 
     .secret-card-content p {
-      font-size: 24px;
-      font-weight: 800;
+      font-size: 26px;
+      font-weight: 900;
       margin: 0;
       color: #ffffff !important;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      transition: color 0.3s ease;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
 
     .hint-badge {
       display: inline-block;
-      margin-top: 8px;
-      padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.9);
-      color: #0f172a;
-      border-radius: 12px;
+      margin-top: 10px;
+      padding: 6px 16px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(10px);
+      color: #ffffff;
+      border-radius: 14px;
       font-size: 13px;
       font-weight: bold;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.25);
     }
 
+    /* الشريط السفلي للتبويب (Floating Navbar) */
     .bottom-tabs {
       position: fixed;
-      bottom: 12px; left: 50%;
+      bottom: 16px; left: 50%;
       transform: translateX(-50%);
       width: 90%;
       max-width: 420px;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(10px);
-      border: 1px solid #e2e8f0;
-      border-radius: 30px;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 35px;
       display: flex;
       justify-content: space-around;
-      padding: 6px 10px;
+      padding: 8px 12px;
       z-index: 100;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
     }
 
     .tab-btn {
       background: none;
       border: none;
-      color: #64748b;
+      color: var(--text-muted);
       font-size: 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
-      padding: 6px 14px;
+      gap: 4px;
+      padding: 8px 16px;
       cursor: pointer;
-      border-radius: 20px;
-      transition: all 0.2s ease;
+      border-radius: 22px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 30%;
     }
 
     .tab-btn.active {
-      color: var(--player-dynamic-color, #7c3aed);
-      background: #f1f5f9;
+      color: #ffffff;
+      background: var(--player-dynamic-color);
+      box-shadow: 0 4px 20px var(--player-dynamic-color);
       font-weight: bold;
     }
 
@@ -311,34 +403,33 @@
     .tab-content { display: none; }
     .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
 
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
+    /* أطراس وأجزاء الإعدادات */
     .section-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      padding: 16px;
-      border-radius: 20px;
-      margin-bottom: 15px;
+      background: rgba(15, 23, 42, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 18px;
+      border-radius: 24px;
+      margin-bottom: 16px;
       text-align: right;
       width: 100%;
+      box-shadow: inset 0 1px 1px rgba(255,255,255,0.05);
     }
 
     .section-box h3 {
       margin-top: 0;
       font-size: 15px;
-      color: #0f172a;
-      border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 8px;
+      color: #ffffff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 10px;
     }
 
-    /* ========================================================= */
-    /* تحسينات تنسيق تبويبة التصنيفات Modern */
-    /* ========================================================= */
     .categories-list-wrapper {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
 
     .category-card-item {
@@ -347,20 +438,20 @@
       justify-content: space-between;
       font-size: 14px;
       font-weight: 700;
-      background: #ffffff;
+      background: rgba(30, 41, 59, 0.65);
       padding: 12px 16px;
-      border-radius: 16px;
-      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       cursor: pointer;
       gap: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .category-card-item:hover {
-      border-color: var(--player-dynamic-color, #7c3aed);
+      border-color: var(--player-dynamic-color);
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      background: rgba(30, 41, 59, 0.9);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
     .category-info {
@@ -370,57 +461,56 @@
     }
 
     .add-category-box {
-      background: #ffffff;
-      border: 1px dashed #cbd5e1;
-      border-radius: 18px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
       padding: 16px;
       margin-top: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
     }
 
     .add-category-box input[type="text"] {
       width: 100%;
-      padding: 11px 14px;
+      padding: 12px 16px;
       margin-bottom: 10px;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      background: #f8fafc;
-      font-size: 13.5px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(30, 41, 59, 0.8);
+      color: #ffffff;
+      font-size: 14px;
       outline: none;
       transition: all 0.2s ease;
     }
 
     .add-category-box input[type="text"]:focus {
-      border-color: var(--player-dynamic-color, #7c3aed);
-      background: #ffffff;
-      box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+      border-color: var(--player-dynamic-color);
+      box-shadow: 0 0 0 3px var(--accent-glow);
     }
 
     .counter-control-group {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #ffffff;
-      padding: 10px 14px;
-      border-radius: 14px;
-      border: 1px solid #e2e8f0;
-      margin-bottom: 12px;
+      background: rgba(30, 41, 59, 0.65);
+      padding: 12px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 14px;
     }
 
     .counter-btn-wrapper {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .btn-counter {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      color: #0f172a;
-      font-size: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      font-size: 20px;
       font-weight: bold;
       display: flex;
       align-items: center;
@@ -431,10 +521,10 @@
       transition: all 0.2s ease;
     }
 
-    .btn-counter:active { transform: scale(0.9); background: #e2e8f0; }
+    .btn-counter:active { transform: scale(0.9); background: var(--player-dynamic-color); }
 
     .counter-value {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
       min-width: 24px;
       text-align: center;
@@ -451,29 +541,27 @@
     .player-row {
       display: flex;
       align-items: center;
-      gap: 8px;
-      background: #ffffff;
-      padding: 8px 10px;
-      border-radius: 16px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      gap: 10px;
+      background: rgba(30, 41, 59, 0.65);
+      padding: 10px 12px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       transition: all 0.2s ease;
       width: 100%;
-      flex-wrap: nowrap;
     }
 
     .player-row:focus-within {
-      border-color: #7c3aed;
-      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.1);
+      border-color: var(--player-dynamic-color);
+      box-shadow: 0 0 15px var(--accent-glow);
     }
 
     .player-number-badge {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 800;
-      color: #64748b;
-      background: #f1f5f9;
-      width: 26px;
-      height: 26px;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.1);
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -484,26 +572,24 @@
     .player-row input[type="text"] {
       flex: 1;
       min-width: 0;
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid #e2e8f0;
-      background: #f8fafc;
-      color: #0f172a;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(15, 23, 42, 0.6);
+      color: #ffffff;
       font-size: 14px;
       font-weight: bold;
       outline: none;
-      transition: border-color 0.2s;
     }
 
     .player-row input[type="text"]:focus {
-      border-color: #7c3aed;
-      background: #ffffff;
+      border-color: var(--player-dynamic-color);
     }
 
     .player-row input[type="color"] {
       border: none;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       cursor: pointer;
       background: none;
@@ -512,11 +598,11 @@
     }
 
     .btn-delete-player {
-      background: #fef2f2;
-      color: #ef4444;
-      border: 1px solid #fecaca;
-      width: 30px;
-      height: 30px;
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -533,40 +619,36 @@
     .btn-delete-player:hover {
       background: #ef4444;
       color: #ffffff;
-      border-color: #ef4444;
-      transform: scale(1.05) rotate(90deg);
-    }
-
-    .btn-delete-player:active {
-      transform: scale(0.9);
+      transform: scale(1.1) rotate(90deg);
     }
 
     .impostor-pills {
       display: flex;
-      gap: 6px;
-      margin-top: 8px;
+      gap: 8px;
+      margin-top: 10px;
       flex-wrap: wrap;
     }
 
     .impostor-pill {
-      flex: 1 1 calc(50% - 6px);
-      min-width: 90px;
-      padding: 8px;
-      border-radius: 12px;
-      border: 1px solid #cbd5e1;
-      background: #ffffff;
+      flex: 1 1 calc(50% - 8px);
+      min-width: 100px;
+      padding: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(30, 41, 59, 0.65);
+      color: #ffffff;
       font-size: 13px;
       font-weight: bold;
       cursor: pointer;
       text-align: center;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .impostor-pill.active {
-      background: var(--player-dynamic-color, #7c3aed);
+      background: var(--player-dynamic-color);
       color: #ffffff;
-      border-color: var(--player-dynamic-color, #7c3aed);
-      box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+      border-color: var(--player-dynamic-color);
+      box-shadow: 0 4px 18px var(--accent-glow);
     }
 
     .checkbox-group, .options-group {
@@ -579,22 +661,28 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 13px;
-      background: #ffffff;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid #f1f5f9;
+      font-size: 13.5px;
+      background: rgba(30, 41, 59, 0.65);
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       cursor: pointer;
-      gap: 8px;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .checkbox-item:hover {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: rgba(255, 255, 255, 0.25);
     }
 
     .btn-view-icon {
-      background: #f1f5f9;
-      color: #0f172a;
-      border: 1px solid #cbd5e1;
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -602,48 +690,63 @@
       cursor: pointer;
       transition: all 0.2s ease;
       flex-shrink: 0;
-      padding: 0;
-      margin: 0;
     }
 
     .btn-view-icon:hover { 
-      background: #e2e8f0; 
-      color: var(--player-dynamic-color, #7c3aed);
-      transform: scale(1.05);
+      background: var(--player-dynamic-color);
+      transform: scale(1.08);
     }
 
+    /* الأزرار المصممة بشكل عصري ثلاثي الأبعاد */
     button {
       border: none;
-      padding: 14px;
-      font-size: 15px;
-      font-weight: bold;
-      border-radius: 16px;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 800;
+      border-radius: 22px;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 12px;
       width: 100%;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
     }
 
-    button:active { transform: scale(0.98); }
+    button:active { transform: scale(0.97); }
 
     .btn-primary {
-      background: var(--player-dynamic-color, #7c3aed);
+      background: linear-gradient(135deg, var(--player-dynamic-color), #3b82f6);
       color: white;
-      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+      box-shadow: 0 8px 25px var(--accent-glow);
     }
 
-    .btn-secondary { background: #10b981; color: white; }
-    .btn-danger { background: #ef4444; color: white; }
+    .btn-primary:hover {
+      box-shadow: 0 10px 30px var(--accent-glow);
+      filter: brightness(1.1);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+    }
 
     .hidden { display: none !important; }
 
+    /* خيارات التصويت المتعدد */
     .multi-vote-card {
-      background: #ffffff;
-      border: 2px solid #e2e8f0;
-      color: #0f172a;
-      padding: 14px 16px;
+      background: rgba(30, 41, 59, 0.65);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      padding: 14px 18px;
       margin-top: 10px;
-      border-radius: 16px;
+      border-radius: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -653,114 +756,108 @@
     }
 
     .multi-vote-card.selected {
-      border-color: var(--player-dynamic-color, #7c3aed);
-      background: rgba(124, 58, 237, 0.08);
-      transform: scale(1.01);
+      border-color: var(--player-dynamic-color);
+      background: rgba(168, 85, 247, 0.2);
+      transform: scale(1.02);
+      box-shadow: 0 0 20px var(--accent-glow);
     }
 
     .checkbox-icon {
       width: 26px;
       height: 26px;
       border-radius: 8px;
-      border: 2px solid #cbd5e1;
+      border: 2px solid rgba(255, 255, 255, 0.25);
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 14px;
       color: white;
-      background: white;
+      background: rgba(15, 23, 42, 0.6);
       transition: all 0.2s ease;
     }
 
     .multi-vote-card.selected .checkbox-icon {
-      background: var(--player-dynamic-color, #7c3aed);
-      border-color: var(--player-dynamic-color, #7c3aed);
+      background: var(--player-dynamic-color);
+      border-color: var(--player-dynamic-color);
     }
 
-    /* ========================================================= */
-    /* تحسينات وتنسيقات صفحة النتائج الحديثة */
-    /* ========================================================= */
+    /* بطاقات كشف النتائج Ultra Hero Cards */
     .reveal-cards-grid {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin: 16px 0;
+      gap: 14px;
+      margin: 20px 0;
     }
 
     .reveal-hero-card {
       position: relative;
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 16px 20px;
+      background: rgba(30, 41, 59, 0.85);
+      border-radius: 26px;
+      padding: 18px 22px;
       display: flex;
       align-items: center;
-      gap: 16px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+      gap: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
       text-align: right;
       overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-
-    .reveal-hero-card:hover {
-      transform: translateY(-2px);
     }
 
     .reveal-hero-card.word-card {
       border-right: 6px solid #10b981;
-      background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(6, 78, 59, 0.5) 100%);
     }
 
     .reveal-hero-card.impostor-card {
       border-right: 6px solid #ef4444;
-      background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(127, 29, 29, 0.5) 100%);
     }
 
     .reveal-icon-circle {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 26px;
       flex-shrink: 0;
     }
 
     .word-card .reveal-icon-circle {
-      background: #d1fae5;
-      color: #059669;
+      background: rgba(16, 185, 129, 0.25);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
     }
 
     .impostor-card .reveal-icon-circle {
-      background: #fee2e2;
-      color: #dc2626;
+      background: rgba(239, 68, 68, 0.25);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.4);
     }
 
-    .reveal-content-info {
-      flex: 1;
-    }
+    .reveal-content-info { flex: 1; }
 
     .reveal-label {
       font-size: 12px;
-      font-weight: 700;
-      color: #64748b;
+      font-weight: 800;
+      color: var(--text-muted);
       margin-bottom: 2px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
     .reveal-value {
-      font-size: 20px;
-      font-weight: 800;
-      color: #0f172a;
+      font-size: 22px;
+      font-weight: 900;
+      color: #ffffff;
       margin: 0;
     }
 
-    .word-card .reveal-value { color: #059669; }
-    .impostor-card .reveal-value { color: #dc2626; }
+    .word-card .reveal-value { color: #34d399; }
+    .impostor-card .reveal-value { color: #f87171; }
 
-    /* التصويت والترتيب بصرياً */
+    /* الترتيب والنتائج */
     .results-ranking-box {
       margin-top: 20px;
       text-align: right;
@@ -769,7 +866,7 @@
     .results-ranking-title {
       font-size: 15px;
       font-weight: 800;
-      color: #0f172a;
+      color: #ffffff;
       margin-bottom: 12px;
       display: flex;
       align-items: center;
@@ -779,26 +876,19 @@
     .result-rank-card {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       padding: 14px;
-      border-radius: 16px;
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      background: rgba(30, 41, 59, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       margin-bottom: 10px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
       transition: all 0.2s ease;
     }
 
     .result-rank-card.top-voted {
       border: 2px solid #ef4444;
-      background: #fff5f5;
-      box-shadow: 0 6px 16px rgba(239, 68, 68, 0.12);
-      animation: pulseBorder 2s infinite ease-in-out;
-    }
-
-    @keyframes pulseBorder {
-      0%, 100% { border-color: #ef4444; }
-      50% { border-color: #f87171; }
+      background: rgba(239, 68, 68, 0.15);
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.25);
     }
 
     .rank-card-header {
@@ -827,90 +917,85 @@
     .rank-votes-count {
       font-size: 13px;
       font-weight: 800;
-      color: #475569;
-      background: #f1f5f9;
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
       padding: 4px 10px;
       border-radius: 20px;
     }
 
     .top-voted .rank-votes-count {
-      background: #fee2e2;
-      color: #991b1b;
+      background: rgba(239, 68, 68, 0.35);
+      color: #fca5a5;
     }
 
     .vote-bar-track {
-      height: 6px;
+      height: 8px;
       width: 100%;
-      background: #f1f5f9;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       overflow: hidden;
     }
 
     .vote-bar-fill {
       height: 100%;
-      background: #94a3b8;
+      background: var(--text-muted);
       border-radius: 10px;
       transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .top-voted .vote-bar-fill {
-      background: #ef4444;
-    }
+    .top-voted .vote-bar-fill { background: #ef4444; }
 
+    /* بنرات الأحداث */
     .starter-player-banner {
-      background: #ffffff;
-      border: 2px dashed var(--starter-dynamic-color, #7c3aed);
-      padding: 16px;
-      border-radius: 18px;
-      margin: 14px 0;
-      animation: pulseBanner 1.5s infinite alternate;
-    }
-
-    @keyframes pulseBanner {
-      from { transform: scale(0.99); }
-      to { transform: scale(1.02); }
+      background: rgba(30, 41, 59, 0.8);
+      border: 2px dashed var(--starter-dynamic-color);
+      padding: 18px;
+      border-radius: 24px;
+      margin: 16px 0;
+      box-shadow: 0 0 25px rgba(0,0,0,0.3);
     }
 
     .wild-card {
-      background: #fef3c7;
+      background: rgba(245, 158, 11, 0.15);
       border-right: 4px solid #f59e0b;
       padding: 14px;
-      border-radius: 12px;
+      border-radius: 18px;
       margin: 14px 0;
       font-size: 14px;
       text-align: right;
-      color: #78350f;
+      color: #fcd34d;
+      border-top: 1px solid rgba(245, 158, 11, 0.25);
+      border-bottom: 1px solid rgba(245, 158, 11, 0.25);
+      border-left: 1px solid rgba(245, 158, 11, 0.25);
     }
 
     .timer-display {
-      font-size: 38px;
-      font-weight: bold;
-      color: #dc2626;
+      font-size: 42px;
+      font-weight: 900;
+      color: #f87171;
       margin: 10px 0;
       font-family: monospace;
+      text-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
     }
 
+    /* المودال الشفاف Modern Glass Modal */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.6);
-      backdrop-filter: blur(8px);
+      background: rgba(2, 6, 23, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 1000;
       padding: 20px;
-      animation: fadeInModal 0.25s ease;
-    }
-
-    @keyframes fadeInModal {
-      from { opacity: 0; }
-      to { opacity: 1; }
     }
 
     .modal-content {
-      background: #ffffff;
-      border-radius: 24px;
+      background: rgba(30, 41, 59, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 32px;
       padding: 24px;
       width: 100%;
       max-width: 440px;
@@ -918,61 +1003,60 @@
       max-height: 85vh;
       display: flex;
       flex-direction: column;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      animation: slideUpModal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes slideUpModal {
-      from { opacity: 0; transform: translateY(20px) scale(0.95); }
-      to { opacity: 1; transform: translateY(0) scale(1); }
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
     }
 
     .words-tags-container {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 14px 0;
+      margin: 16px 0;
       max-height: 260px;
       overflow-y: auto;
-      padding: 10px;
-      background: #f8fafc;
-      border-radius: 14px;
-      border: 1px solid #e2e8f0;
+      padding: 12px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .word-tag {
-      background: #ffffff;
-      color: #0f172a;
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
       padding: 6px 14px;
       border-radius: 20px;
       font-size: 13px;
       font-weight: bold;
       display: flex;
       align-items: center;
-      gap: 6px;
-      border: 1px solid #cbd5e1;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      gap: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
-    .word-tag span { cursor: pointer; color: #ef4444; font-weight: bold; }
+    .word-tag span { cursor: pointer; color: #f87171; font-weight: bold; }
   </style>
 </head>
 <body>
 
   <div class="card" id="main-card">
+    
+    <!-- زر الخروج من الجولة -->
+    <button id="exit-round-btn" class="exit-round-btn hidden" onclick="confirmExitRound()">
+      🚪 خروج
+    </button>
+
     <h1>🎭 لعبة من المحتال؟</h1>
 
     <!-- 1. إعدادات اللعبة -->
     <div id="setup-step">
       
-      <!-- تبويب 1: التصنيفات المنظمة والمرتبة -->
+      <!-- تبويب 1: التصنيفات -->
       <div id="tab-categories" class="tab-content active">
         <section class="section-box">
           <h3>📂 اختر تصنيفات الكلمات:</h3>
           <div id="categories-container" class="categories-list-wrapper"></div>
           
           <details style="margin-top:14px; font-size:13px;">
-            <summary style="cursor:pointer; font-weight:bold; color:var(--player-dynamic-color, #7c3aed); padding:4px 0;">➕ إضافة تصنيف جديد</summary>
+            <summary style="cursor:pointer; font-weight:bold; color:var(--player-dynamic-color); padding:6px 0;">➕ إضافة تصنيف جديد</summary>
             <div class="add-category-box">
               <input type="text" id="new-cat-name" placeholder="اسم التصنيف الجديد (مثال: رياضات)">
               <input type="text" id="new-cat-words" placeholder="الكلمات مفرقة بـ فارزة (كرة القدم, كرة السلة)">
@@ -998,11 +1082,11 @@
 
           <div id="players-inputs-list"></div>
 
-          <div style="margin-top:14px;">
-            <label style="font-weight:bold; font-size:14px; display:block; text-align:right;">عدد المحتالين:</label>
+          <div style="margin-top:16px;">
+            <label style="font-weight:bold; font-size:14px; display:block; text-align:right; margin-bottom:6px;">عدد المحتالين:</label>
             <div class="impostor-pills">
-              <div class="impostor-pill" onclick="setImpostorCount('random')" id="imp-pill-random">🎲 عشوائي</div>
-              <div class="impostor-pill active" onclick="setImpostorCount('1')" id="imp-pill-1">1 محتال</div>
+              <div class="impostor-pill active" onclick="setImpostorCount('random')" id="imp-pill-random">🎲 عشوائي (من 0 إلى الكل)</div>
+              <div class="impostor-pill" onclick="setImpostorCount('1')" id="imp-pill-1">1 محتال</div>
               <div class="impostor-pill" onclick="setImpostorCount('2')" id="imp-pill-2">2 محتالين</div>
               <div class="impostor-pill" onclick="setImpostorCount('3')" id="imp-pill-3">3 محتالين</div>
             </div>
@@ -1033,6 +1117,10 @@
         <section class="section-box">
           <h3>⚙ خيارات اللعبة:</h3>
           <div class="options-group">
+            <div class="checkbox-item" onclick="toggleOption('opt-cap-random')">
+              <label for="opt-cap-random">🛑 تحديد العشوائي في حدود 3 محتالين فقط</label>
+              <input type="checkbox" id="opt-cap-random" checked onclick="event.stopPropagation(); saveOptionsToStorage();">
+            </div>
             <div class="checkbox-item" onclick="toggleOption('opt-word-hint')">
               <label for="opt-word-hint">💡 إظهار تلميح خفيف يساعد في المعرفة</label>
               <input type="checkbox" id="opt-word-hint" onclick="event.stopPropagation(); saveOptionsToStorage();">
@@ -1062,18 +1150,18 @@
               <input type="checkbox" id="opt-timer" onchange="toggleTimerInput(); saveOptionsToStorage();" onclick="event.stopPropagation();">
             </div>
 
-            <div id="timer-input-box" class="hidden" style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-              <label>مدة المؤقت (دقائق):</label>
-              <input type="number" id="timer-minutes" min="1" max="10" value="3" onchange="saveOptionsToStorage()" style="width:70px; text-align:center; padding:6px; border-radius:8px; border:1px solid #cbd5e1;">
+            <div id="timer-input-box" class="hidden" style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+              <label style="font-size:13px; color:var(--text-muted);">مدة المؤقت (دقائق):</label>
+              <input type="number" id="timer-minutes" min="1" max="10" value="3" onchange="saveOptionsToStorage()" style="width:75px; text-align:center; padding:8px; border-radius:10px; border:1px solid rgba(255,255,255,0.15); background:rgba(15,23,42,0.8); color:#fff; font-weight:bold;">
             </div>
           </div>
         </section>
 
         <details class="section-box">
-          <summary style="cursor:pointer; font-weight:bold;">🏆 جدول الترتيب والنقاط التراكمية</summary>
-          <table style="width:100%; border-collapse:collapse; margin-top:10px; text-align:right; font-size:14px;">
+          <summary style="cursor:pointer; font-weight:bold; color:#fff;">🏆 جدول الترتيب والنقاط التراكمية</summary>
+          <table style="width:100%; border-collapse:collapse; margin-top:12px; text-align:right; font-size:14px;">
             <thead>
-              <tr style="border-bottom:1px solid #e2e8f0;"><th>اللاعب</th><th>النقاط</th></tr>
+              <tr style="border-bottom:1px solid rgba(255,255,255,0.1); color:var(--text-muted);"><th style="padding:6px;">اللاعب</th><th style="padding:6px;">النقاط</th></tr>
             </thead>
             <tbody id="scoreboard-body"></tbody>
           </table>
@@ -1083,7 +1171,7 @@
       <button class="btn-primary" onclick="startGame()" style="margin-top:15px;">ابدأ اللعبة 🚀</button>
     </div>
 
-    <!-- 2. مرحلة كشف الأدوار (أنيميشن قلب البطاقة 3D) -->
+    <!-- 2. مرحلة كشف الأدوار -->
     <div id="role-step" class="hidden">
       <div class="top-progress-bar">
         <div class="progress-track">
@@ -1092,30 +1180,27 @@
         <div id="player-step-text" class="player-step-badge">لاعب 1 من 4</div>
       </div>
 
-      <!-- حاوية ثلاثية الأبعاد لقلب البطاقة -->
       <div class="flip-card-perspective">
         <div id="main-player-card" class="player-card-box" 
              onpointerdown="startHold(event)" onpointerup="endHold(event)" onpointercancel="endHold(event)">
           
-          <!-- الوجه الأمامي للبطاقة -->
           <div class="card-face card-front">
             <div class="avatar-icon-box">👤</div>
             <h2 id="card-player-name">لاعب 1</h2>
             <div id="click-icon" class="click-icon-circle">👆</div>
             <p id="click-hint-title" style="font-size:15px; font-weight:bold; margin:0; pointer-events:none;">اضغط مطولاً لكشف الكلمة</p>
-            <p id="click-hint-sub" style="font-size:12px; opacity:0.8; margin-top:-8px; pointer-events:none;">تنقلب البطاقة وتختفي فور ترك الضغط</p>
+            <p id="click-hint-sub" style="font-size:12px; color:var(--text-muted); margin-top:-6px; pointer-events:none;">تنقلب البطاقة وتختفي فور ترك الضغط</p>
           </div>
 
-          <!-- الوجه الخلفي للبطاقة (ملون بنفس لون اللاعب بدلاً من الأبيض) -->
           <div class="card-face card-back">
             <div class="secret-card-content">
               <p id="secret-text"></p>
               <div id="secret-hint-badge" class="hint-badge hidden"></div>
-              <small id="role-desc" style="display:block; margin-top:8px; color:rgba(255,255,255,0.9); font-weight:bold;"></small>
+              <small id="role-desc" style="display:block; margin-top:10px; color:rgba(255,255,255,0.9); font-weight:bold; line-height:1.4;"></small>
 
-              <div id="bet-section" class="hidden" style="background:rgba(255, 255, 255, 0.2); backdrop-filter:blur(5px); padding:10px; border-radius:12px; margin-top:12px; pointer-events:auto;" onclick="event.stopPropagation();">
-                <label style="font-size:12px; color:#ffffff; font-weight:bold; display:block; margin-bottom:4px;">🎲 اختار رهانك فـ هاد الجولة:</label>
-                <select id="player-bet-select" style="width:100%; padding:6px; border-radius:8px; border:1px solid rgba(255,255,255,0.4); background:#ffffff; color:#0f172a; font-weight:bold;">
+              <div id="bet-section" class="hidden" style="background:rgba(0, 0, 0, 0.25); backdrop-filter:blur(10px); padding:12px; border-radius:16px; margin-top:14px; border:1px solid rgba(255,255,255,0.1); pointer-events:auto;" onclick="event.stopPropagation();">
+                <label style="font-size:12px; color:#ffffff; font-weight:bold; display:block; margin-bottom:6px;">🎲 اختار رهانك فـ هاد الجولة:</label>
+                <select id="player-bet-select" style="width:100%; padding:8px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); background:rgba(15,23,42,0.9); color:#ffffff; font-weight:bold;">
                   <option value="none">بدون رهان</option>
                   <option value="find_impostor">غادي نكتشف المحتال الصحيح (+2 نقط)</option>
                   <option value="no_votes">حد ما غادي يصوت علي فـ الجولة (+3 نقط)</option>
@@ -1132,11 +1217,11 @@
 
     <!-- 3. مرحلة النقاش واللعب -->
     <div id="gameplay-step" class="hidden">
-      <h2>🔥 بدأ النقاش!</h2>
+      <h2 style="font-size:24px;">🔥 بدأ النقاش!</h2>
 
       <div id="starter-player-box" class="starter-player-banner">
-        <span style="font-size:13px; color:#64748b; font-weight:bold;">🎯 النوبة غادي تبدأ عشوائياً من عند:</span>
-        <h3 id="starter-player-name" style="margin:6px 0 0 0; font-size:24px; color:var(--starter-dynamic-color);"></h3>
+        <span style="font-size:13px; color:var(--text-muted); font-weight:bold;">🎯 النوبة غادي تبدأ عشوائياً من عند:</span>
+        <h3 id="starter-player-name" style="margin:8px 0 0 0; font-size:26px; color:var(--starter-dynamic-color); text-shadow: 0 0 10px rgba(0,0,0,0.5);"></h3>
       </div>
 
       <div id="wildcard-box" class="wild-card hidden">
@@ -1154,18 +1239,17 @@
     <!-- 4. مرحلة التصويت المتعدد -->
     <div id="voting-step" class="hidden">
       <h2 id="voter-turn-title" style="color:var(--player-dynamic-color);">دور التصويت</h2>
-      <p style="font-size:14px; color:#64748b;">تقدر تختار أكثر من شخص شاك فيه فـ هاد الجولة:</p>
+      <p style="font-size:14px; color:var(--text-muted);">تقدر تختار أكثر من شخص شاك فيه فـ هاد الجولة:</p>
       
       <div id="voting-buttons-container"></div>
 
       <button class="btn-primary" onclick="confirmMultiVote()" style="margin-top:15px;">تأكيد التصويت 🗳</button>
     </div>
 
-    <!-- 5. كشف النتائج المحدثة والجديدة -->
+    <!-- 5. كشف النتائج -->
     <div id="result-step" class="hidden">
-      <h2>📊 نتائج الجولة!</h2>
+      <h2 style="font-size:24px;">📊 نتائج الجولة!</h2>
       
-      <!-- كروت كشف الحقائق -->
       <div class="reveal-cards-grid">
         <div class="reveal-hero-card word-card">
           <div class="reveal-icon-circle">🔑</div>
@@ -1176,7 +1260,7 @@
         </div>
 
         <div class="reveal-hero-card impostor-card">
-          <div class="reveal-icon-circle">🕵️</div>
+          <div class="reveal-icon-circle">🕵</div>
           <div class="reveal-content-info">
             <div class="reveal-label">المحتال المطلوب</div>
             <div class="reveal-value" id="revealed-impostors">---</div>
@@ -1184,20 +1268,18 @@
         </div>
       </div>
 
-      <!-- ترتيب الأصوات والشكوك -->
       <div id="ranking-section-wrapper" class="results-ranking-box hidden">
         <div class="results-ranking-title">
-          <span>🗳️ ترتيب الأصوات والشكوك:</span>
+          <span>🗳 ترتيب الأصوات والشكوك:</span>
         </div>
         <div id="results-ranking-container"></div>
       </div>
 
-      <!-- خيارات إضافة النقاط والتحكم -->
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px; padding: 14px; margin-top: 16px;">
-        <span style="font-size: 13px; font-weight: bold; color: #64748b; display: block; margin-bottom: 8px;">إضافة نقاط الجولة للحساب التراكمي:</span>
+      <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 22px; padding: 16px; margin-top: 18px;">
+        <span style="font-size: 13px; font-weight: bold; color: var(--text-muted); display: block; margin-bottom: 10px;">إضافة نقاط الجولة للحساب التراكمي:</span>
         <div style="display:flex; gap:10px;">
-          <button class="btn-secondary" style="margin-top:0;" onclick="addScoreToWinners('innocents')">ربح المواطنين (+1)</button>
-          <button class="btn-danger" style="margin-top:0;" onclick="addScoreToWinners('impostors')">ربح المحتالين (+3)</button>
+          <button class="btn-secondary" style="margin-top:0; flex:1;" onclick="addScoreToWinners('innocents')">ربح المواطنين (+1)</button>
+          <button class="btn-danger" style="margin-top:0; flex:1;" onclick="addScoreToWinners('impostors')">ربح المحتالين (+3)</button>
         </div>
       </div>
 
@@ -1206,7 +1288,6 @@
 
   </div>
 
-  <!-- التبويبات السفلية العائمة -->
   <nav id="bottom-tabs-bar" class="bottom-tabs">
     <button class="tab-btn active" onclick="switchTab('tab-categories', this)">
       <span>📂</span> التصنيفات
@@ -1219,25 +1300,24 @@
     </button>
   </nav>
 
-  <!-- Modal تعديل الكلمات -->
   <div id="words-modal" class="modal-overlay hidden">
     <div class="modal-content">
-      <div style="display:flex; justify-space-between; align-items:center; border-bottom:1px solid #e2e8f0; padding-bottom:10px;">
-        <h3 id="modal-cat-title" style="margin:0; color:#0f172a; font-size:16px;">تعديل كلمات التصنيف</h3>
-        <span onclick="closeWordsModal()" style="cursor:pointer; font-weight:bold; font-size:20px; color:#64748b;">✕</span>
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:12px;">
+        <h3 id="modal-cat-title" style="margin:0; color:#ffffff; font-size:16px;">تعديل كلمات التصنيف</h3>
+        <span onclick="closeWordsModal()" style="cursor:pointer; font-weight:bold; font-size:22px; color:var(--text-muted);">✕</span>
       </div>
       
       <div id="modal-words-list" class="words-tags-container"></div>
       
-      <div style="display:flex; gap:8px; margin-top:auto;">
-        <input type="text" id="add-single-word-input" placeholder="إضافة كلمة جديدة..." style="flex:1; padding:10px; border-radius:10px; border:1px solid #cbd5e1; font-size:14px;">
-        <button class="btn-secondary" style="width:auto; margin:0; padding:10px 18px;" onclick="addWordToCurrentCategory()">إضافة</button>
+      <div style="display:flex; gap:10px; margin-top:auto;">
+        <input type="text" id="add-single-word-input" placeholder="إضافة كلمة جديدة..." style="flex:1; padding:12px; border-radius:14px; border:1px solid rgba(255,255,255,0.15); background:rgba(15,23,42,0.8); color:#fff; font-size:14px;">
+        <button class="btn-secondary" style="width:auto; margin:0; padding:12px 20px; border-radius:14px;" onclick="addWordToCurrentCategory()">إضافة</button>
       </div>
     </div>
   </div>
 
   <script>
-    const defaultColors = ["#7c3aed", "#2563eb", "#059669", "#d97706", "#dc2626", "#db2777", "#0891b2", "#ea580c"];
+    const defaultColors = ["#a855f7", "#3b82f6", "#10b981", "#f59e0b", "#ef4444", "#ec4899", "#06b6d4", "#f97316"];
 
     const defaultDatabase = {
       "🍲 مأكولات ومشروبات": [
@@ -1254,7 +1334,7 @@
         "جلابة", "كاندورة", "بيجامة", "سورڤيتنانت", "تريكو", "قميجة", "جاكيت", "كابوتش", "صباط", "سبرديلة", 
         "صندالة", "بليغة", "كاسكيطة", "بونيه", "خاتم", "دمليج (سوار)", "نظارات", "مكياج", "قفطان", "شربيل"
       ],
-      "🏛️ أماكن ومرافق": [
+      "🏛 أماكن ومرافق": [
         "قهوة", "مطعم", "حمام", "مرجان", "حانوت", "سويقة", "بحر", "مسبح", "حديقة", "غابة", "مطار", 
         "محطة", "سينما", "سبيطار", "فارماسي", "بانكة", "بوسطة", "ملعب", "لاصال (Gym)", "كورنيش", "حبوس"
       ],
@@ -1275,24 +1355,24 @@
     };
 
     const wildCardsList = [
-      "🗣️ جولة الهمس: كولشي كيهضر غير بـ الهمس فقط!",
+      "🗣 جولة الهمس: كولشي كيهضر غير بـ الهمس فقط!",
       "☝️ كلمة واحدة: كل لاعب عندو الحق يقول كلمة واحدة فقط فـ دورو!",
       "❓ نعم أم لا: الأسئلة والأجوبة خاصها تكون بـ نعم أو لا فقط!",
-      "🎭 الممثل الجامت: استعمل الحركات والإشارات فقط بدون كلام لشرح كلمتك!",
+      "🎭 الممثل الصامت: استعمل الحركات والإشارات فقط بدون كلام لشرح كلمتك!",
       "⏱ سرعة السرعة: عندك 5 ثواني فقط للتحدث وإبداء رأيك!"
     ];
 
     let database = JSON.parse(localStorage.getItem("impostor_db_v14")) || defaultDatabase;
     let scores = JSON.parse(localStorage.getItem("impostor_scores_v14")) || {};
     let savedPlayers = JSON.parse(localStorage.getItem("impostor_saved_players_v14")) || [
-      { name: "لاعب 1", color: "#7c3aed" },
-      { name: "لاعب 2", color: "#2563eb" },
-      { name: "لاعب 3", color: "#059669" },
-      { name: "لاعب 4", color: "#d97706" }
+      { name: "لاعب 1", color: "#a855f7" },
+      { name: "لاعب 2", color: "#3b82f6" },
+      { name: "لاعب 3", color: "#10b981" },
+      { name: "لاعب 4", color: "#f59e0b" }
     ];
 
     let playerCount = savedPlayers.length;
-    let selectedImpostorMode = "1";
+    let selectedImpostorMode = "random";
 
     let gameState = {
       step: "setup",
@@ -1316,7 +1396,6 @@
     let hasRevealedWord = false;
     let currentVoterSelectedTargets = [];
 
-    // أنيميشن عند الضغط على الشاشة
     document.addEventListener('pointerdown', function(e) {
       const ripple = document.createElement('div');
       ripple.className = 'tap-ripple';
@@ -1357,6 +1436,7 @@
 
     function saveOptionsToStorage() {
       const options = {
+        capRandom: document.getElementById("opt-cap-random").checked,
         detective: document.getElementById("role-detective").checked,
         joker: document.getElementById("role-joker").checked,
         seer: document.getElementById("role-seer").checked,
@@ -1378,6 +1458,7 @@
       if (saved) {
         try {
           const opts = JSON.parse(saved);
+          if (opts.capRandom !== undefined) document.getElementById("opt-cap-random").checked = opts.capRandom;
           if (opts.detective !== undefined) document.getElementById("role-detective").checked = opts.detective;
           if (opts.joker !== undefined) document.getElementById("role-joker").checked = opts.joker;
           if (opts.seer !== undefined) document.getElementById("role-seer").checked = opts.seer;
@@ -1476,6 +1557,7 @@
     function restoreGameStepUI() {
       hideAllSteps();
       document.getElementById("bottom-tabs-bar").classList.add("hidden");
+      document.getElementById("exit-round-btn").classList.remove("hidden");
 
       if (gameState.step === "role") {
         document.getElementById("role-step").classList.remove("hidden");
@@ -1510,6 +1592,15 @@
       document.getElementById("gameplay-step").classList.add("hidden");
       document.getElementById("voting-step").classList.add("hidden");
       document.getElementById("result-step").classList.add("hidden");
+      document.getElementById("exit-round-btn").classList.add("hidden");
+    }
+
+    function confirmExitRound() {
+      triggerVibrate(40);
+      if (confirm("واش متأكد بغيتي تخرج من هاد الجولة وترجع للواجهة الرئيسية؟")) {
+        clearInterval(timerInterval);
+        resetGame();
+      }
     }
 
     function switchTab(tabId, btnEl) {
@@ -1540,6 +1631,58 @@
       });
     }
 
+    function addCustomCategory() {
+      const catName = document.getElementById("new-cat-name").value.trim();
+      const catWordsRaw = document.getElementById("new-cat-words").value.trim();
+      if (!catName || !catWordsRaw) return alert("المرجو ملء جميع الخانات!");
+      const words = catWordsRaw.split(",").map(w => w.trim()).filter(w => w.length > 0);
+      if (words.length === 0) return alert("أدخل كلمات صالحة مفرقة بـ فارزة!");
+      
+      database[`📂 ${catName}`] = words;
+      saveDatabase();
+      renderCategories();
+      document.getElementById("new-cat-name").value = "";
+      document.getElementById("new-cat-words").value = "";
+      alert("تمت إضافة التصنيف بنجاح!");
+    }
+
+    function openWordsModal(cat) {
+      selectedCategoryForModal = cat;
+      document.getElementById("modal-cat-title").innerText = `كلمات: ${cat}`;
+      renderModalWords();
+      document.getElementById("words-modal").classList.remove("hidden");
+    }
+
+    function closeWordsModal() {
+      document.getElementById("words-modal").classList.add("hidden");
+    }
+
+    function renderModalWords() {
+      const list = document.getElementById("modal-words-list");
+      list.innerHTML = "";
+      (database[selectedCategoryForModal] || []).forEach((w, i) => {
+        list.innerHTML += `<div class="word-tag">${w} <span onclick="removeWordFromCategory(${i})">✕</span></div>`;
+      });
+    }
+
+    function addWordToCurrentCategory() {
+      const input = document.getElementById("add-single-word-input");
+      const word = input.value.trim();
+      if (!word) return;
+      database[selectedCategoryForModal].push(word);
+      saveDatabase();
+      renderModalWords();
+      renderCategories();
+      input.value = "";
+    }
+
+    function removeWordFromCategory(index) {
+      database[selectedCategoryForModal].splice(index, 1);
+      saveDatabase();
+      renderModalWords();
+      renderCategories();
+    }
+
     function generatePlayerInputs() {
       const listContainer = document.getElementById("players-inputs-list");
       listContainer.innerHTML = "";
@@ -1562,7 +1705,7 @@
       const tbody = document.getElementById("scoreboard-body");
       tbody.innerHTML = "";
       Object.keys(scores).forEach(name => {
-        tbody.innerHTML += `<tr><td><b>${name}</b></td><td>${scores[name]} نقطة</td></tr>`;
+        tbody.innerHTML += `<tr><td style="padding:6px;"><b>${name}</b></td><td style="padding:6px;">${scores[name]} نقطة</td></tr>`;
       });
     }
 
@@ -1575,7 +1718,7 @@
       document.documentElement.style.setProperty('--player-dynamic-color', color);
       const card = document.getElementById("main-card");
       card.style.borderColor = color;
-      card.style.boxShadow = `0 15px 35px rgba(0,0,0,0.05), 0 0 20px ${color}33`;
+      card.style.boxShadow = `0 30px 60px -12px rgba(0,0,0,0.6), 0 0 35px ${color}55`;
     }
 
     function startGame() {
@@ -1608,146 +1751,177 @@
         currentWord = wordPool[Math.floor(Math.random() * wordPool.length)];
       }
 
-      let numImpostors = selectedImpostorMode === "random" 
-        ? Math.floor(Math.random() * Math.max(1, Math.floor(players.length / 2))) + 1 
-        : parseInt(selectedImpostorMode);
-
-      if (numImpostors >= players.length) return alert("عدد المحتالين خاصو يكون أقل من عدد اللاعبين!");
-
-      let impIndices = [];
-      while (impIndices.length < numImpostors) {
-        let rand = Math.floor(Math.random() * players.length);
-        if (!impIndices.includes(rand)) impIndices.push(rand);
+      let numImpostors = 0;
+      if (selectedImpostorMode === "random") {
+        const isCapped = document.getElementById("opt-cap-random").checked;
+        let maxLimit = players.length;
+        if (isCapped) maxLimit = Math.min(3, players.length - 1);
+        numImpostors = Math.floor(Math.random() * (maxLimit + 1));
+      } else {
+        numImpostors = parseInt(selectedImpostorMode);
+        if (numImpostors >= players.length) numImpostors = players.length - 1;
       }
 
-      const impostorNames = impIndices.map(idx => players[idx].name);
-      const enableImpostorFriends = document.getElementById("opt-impostor-friends").checked;
+      let indices = players.map((_, i) => i);
+      indices.sort(() => Math.random() - 0.5);
 
-      let availableForRoles = players.map((_, i) => i).filter(i => !impIndices.includes(i));
-      let detectiveIdx = -1, jokerIdx = -1, seerIdx = -1;
+      let impostorIndices = indices.slice(0, numImpostors);
+      let impostorNames = impostorIndices.map(i => players[i].name);
 
-      if (document.getElementById("role-detective").checked && availableForRoles.length > 0) {
-        detectiveIdx = availableForRoles.splice(Math.floor(Math.random() * availableForRoles.length), 1)[0];
+      let remainingIndices = indices.slice(numImpostors);
+
+      let specialRoles = {};
+
+      if (document.getElementById("role-detective").checked && remainingIndices.length > 0) {
+        specialRoles[remainingIndices.pop()] = "detective";
       }
-      if (document.getElementById("role-joker").checked && availableForRoles.length > 0) {
-        jokerIdx = availableForRoles.splice(Math.floor(Math.random() * availableForRoles.length), 1)[0];
+      if (document.getElementById("role-joker").checked && remainingIndices.length > 0) {
+        specialRoles[remainingIndices.pop()] = "joker";
       }
-      if (document.getElementById("role-seer").checked && availableForRoles.length > 0) {
-        seerIdx = availableForRoles.splice(Math.floor(Math.random() * availableForRoles.length), 1)[0];
+      if (document.getElementById("role-seer").checked && remainingIndices.length > 0) {
+        specialRoles[remainingIndices.pop()] = "seer";
       }
 
-      const playerRoles = players.map((p, i) => {
-        if (impIndices.includes(i)) {
-          let otherImpostors = impostorNames.filter(n => n !== p.name);
-          let friendsText = (enableImpostorFriends && otherImpostors.length > 0) ? `<br><small style="color:#fef08a;">🤝 صديقك فـ الاحتيال: ${otherImpostors.join(" ، ")}</small>` : "";
-          return { role: "impostor", text: "🕵️ أنت هو المحتال!", desc: `حاول تخبي وما تخلي حد يفيق بيك!${friendsText}` };
-        } else if (i === detectiveIdx) {
-          let innocentNames = players.filter((_, idx) => !impIndices.includes(idx) && idx !== detectiveIdx);
-          let knownInnocent = innocentNames[Math.floor(Math.random() * innocentNames.length)]?.name || "لا يوجد";
-          return { role: "detective", text: `🔎 الكلمة هي: ${currentWord}`, desc: `معلومة خاصة: (${knownInnocent}) شخص بريء أكيد!` };
-        } else if (i === jokerIdx) {
-          let otherWords = wordPool.filter(w => w !== currentWord);
-          let fakeWord = otherWords[Math.floor(Math.random() * otherWords.length)] || "كلمة مضللة";
-          return { role: "joker", text: `🃏 الكلمة هي: ${fakeWord}`, desc: "ملاحظة: كلمتك قد تكون مضللة وقريبة للكلمة الأصلية!" };
-        } else if (i === seerIdx) {
-          let impText = impostorNames.join(" ، ");
-          return { role: "seer", text: `🧙‍♂️ الكلمة هي: ${currentWord}`, desc: `⚡ قدرة السحر كشفات ليك المحتال مباشرة: <b style="color:#fca5a5;">${impText}</b>` };
-        } else {
-          return { role: "innocent", text: `🔑 الكلمة هي: ${currentWord}`, desc: "أنت مواطن بريء، اكتشف المحتال!" };
+      let playerRoles = players.map((p, i) => {
+        if (impostorIndices.includes(i)) {
+          return { type: "impostor", title: "محتال 🕵️‍♂️" };
+        } else if (specialRoles[i]) {
+          let r = specialRoles[i];
+          if (r === "detective") return { type: "detective", title: "محقق 🔎" };
+          if (r === "joker") return { type: "joker", title: "مُضلل 🃏" };
+          if (r === "seer") return { type: "seer", title: "عرّاف 🧙‍♂️" };
         }
+        return { type: "innocent", title: "مواطن بريء 👤" };
       });
 
       gameState = {
         step: "role",
-        players,
-        playerRoles,
+        players: players,
+        playerRoles: playerRoles,
         playerBets: {},
         votes: {},
-        currentWord,
-        currentCategory,
-        impostorNames,
+        currentWord: currentWord,
+        currentCategory: currentCategory,
+        impostorNames: impostorNames,
         currentIndex: 0,
         votingIndex: 0,
-        timerSeconds: document.getElementById("opt-timer").checked ? (parseInt(document.getElementById("timer-minutes").value) || 3) * 60 : 0,
+        timerSeconds: 0,
         timerRunning: false,
-        starterPlayer: null,
+        starterPlayer: players[Math.floor(Math.random() * players.length)],
         wildCardText: ""
       };
+
+      if (document.getElementById("opt-wildcard").checked && Math.random() < 0.5) {
+        gameState.wildCardText = wildCardsList[Math.floor(Math.random() * wildCardsList.length)];
+      }
+
+      if (document.getElementById("opt-timer").checked) {
+        const mins = parseInt(document.getElementById("timer-minutes").value) || 3;
+        gameState.timerSeconds = mins * 60;
+      }
 
       saveActiveGameState();
 
       hideAllSteps();
       document.getElementById("bottom-tabs-bar").classList.add("hidden");
+      document.getElementById("exit-round-btn").classList.remove("hidden");
       document.getElementById("role-step").classList.remove("hidden");
-      
-      const enableBetting = document.getElementById("opt-betting").checked;
-      document.getElementById("bet-section").classList.toggle("hidden", !enableBetting);
 
       updateTurnUI();
     }
 
     function updateTurnUI() {
-      const p = gameState.players[gameState.currentIndex];
-      setDynamicThemeColor(p.color);
       hasRevealedWord = false;
+      const player = gameState.players[gameState.currentIndex];
+      setDynamicThemeColor(player.color);
 
-      // إرجاع البطاقة لوجهها الأصلي
+      document.getElementById("progress-fill-bar").style.width = `${((gameState.currentIndex + 1) / gameState.players.length) * 100}%`;
+      document.getElementById("player-step-text").innerText = `${player.name} (${gameState.currentIndex + 1} من ${gameState.players.length})`;
+
+      document.getElementById("card-player-name").innerText = player.name;
+      document.getElementById("click-hint-title").innerText = "اضغط مطولاً لكشف الكلمة";
+      document.getElementById("click-hint-sub").innerText = "تنقلب البطاقة وتختفي فور ترك الضغط";
+
       document.getElementById("main-player-card").classList.remove("flipped");
-
-      document.getElementById("card-player-name").innerText = p.name;
-      document.getElementById("player-step-text").innerText = `لاعب ${gameState.currentIndex + 1} من ${gameState.players.length}`;
-      
-      const progressPercent = ((gameState.currentIndex + 1) / gameState.players.length) * 100;
-      document.getElementById("progress-fill-bar").style.width = `${progressPercent}%`;
-
       document.getElementById("next-player-btn").classList.add("hidden");
+
+      const betSec = document.getElementById("bet-section");
+      if (document.getElementById("opt-betting").checked) {
+        betSec.classList.remove("hidden");
+        document.getElementById("player-bet-select").value = "none";
+      } else {
+        betSec.classList.add("hidden");
+      }
     }
 
     function startHold(e) {
       if (e) e.preventDefault();
-      triggerVibrate(30);
-      playSound(350, 'triangle', 0.1);
-      hasRevealedWord = true;
-
-      const pData = gameState.playerRoles[gameState.currentIndex];
+      const role = gameState.playerRoles[gameState.currentIndex];
+      const player = gameState.players[gameState.currentIndex];
       const secretText = document.getElementById("secret-text");
-      
-      secretText.innerText = pData.text;
-      
-      document.getElementById("role-desc").innerHTML = pData.desc;
+      const secretHint = document.getElementById("secret-hint-badge");
+      const roleDesc = document.getElementById("role-desc");
 
-      const hintBadge = document.getElementById("secret-hint-badge");
-      const isHintEnabled = document.getElementById("opt-word-hint").checked;
-      if (isHintEnabled && pData.role !== 'impostor' && gameState.currentCategory) {
-        hintBadge.innerText = `💡 تلميح: الكلمة من تصنيف (${gameState.currentCategory})`;
-        hintBadge.classList.remove("hidden");
+      secretHint.classList.add("hidden");
+      roleDesc.innerText = "";
+
+      if (role.type === "impostor") {
+        secretText.innerText = "أنت المحتال! 🕵️‍♂️";
+        if (document.getElementById("opt-impostor-friends").checked && gameState.impostorNames.length > 1) {
+          let friends = gameState.impostorNames.filter(n => n !== player.name);
+          roleDesc.innerText = `المحتالين الأصدقاء معاك: ${friends.join(" - ")}`;
+        } else {
+          roleDesc.innerText = "حاول تحزر الكلمة وما تخلي حد يشك فيك!";
+        }
+      } else if (role.type === "detective") {
+        secretText.innerText = `الكلمة: ${gameState.currentWord}`;
+        let innocentOthers = gameState.players.filter((p, idx) => gameState.playerRoles[idx].type !== "impostor" && p.name !== player.name);
+        if (innocentOthers.length > 0) {
+          let target = innocentOthers[Math.floor(Math.random() * innocentOthers.length)];
+          roleDesc.innerText = `🔎 معلومة سرية: اللاعب [${target.name}] مواطن بريء!`;
+        }
+      } else if (role.type === "joker") {
+        secretText.innerText = "أنت المُضلل! 🃏";
+        roleDesc.innerText = `كلمتك المضللة هي: [حوت] (حاول تضلل باقي اللاعبين!)`;
+      } else if (role.type === "seer") {
+        secretText.innerText = `الكلمة: ${gameState.currentWord}`;
+        if (gameState.impostorNames.length > 0) {
+          let targetImp = gameState.impostorNames[Math.floor(Math.random() * gameState.impostorNames.length)];
+          roleDesc.innerText = `🧙‍♂️ كشف العرّاف: اللاعب [${targetImp}] هو المحتال!`;
+        } else {
+          roleDesc.innerText = "🧙‍♂️ كشف العرّاف: مكاين حتى محتال فـ هاد الجولة!";
+        }
       } else {
-        hintBadge.classList.add("hidden");
+        secretText.innerText = `الكلمة: ${gameState.currentWord}`;
+        roleDesc.innerText = "أنت مواطن بريء، كشف المحتال بذكاء!";
+      }
+
+      if (document.getElementById("opt-word-hint").checked && role.type !== "impostor") {
+        secretHint.innerText = `💡 تصنيف الكلمة: ${gameState.currentCategory}`;
+        secretHint.classList.remove("hidden");
       }
 
       document.getElementById("main-player-card").classList.add("flipped");
+      hasRevealedWord = true;
+      triggerVibrate(30);
+      playSound(600, 'sine', 0.1);
     }
 
     function endHold(e) {
       if (e) e.preventDefault();
+      document.getElementById("main-player-card").classList.remove("flipped");
       if (hasRevealedWord) {
-        document.getElementById("main-player-card").classList.remove("flipped");
         document.getElementById("next-player-btn").classList.remove("hidden");
+
+        const betVal = document.getElementById("player-bet-select").value;
+        gameState.playerBets[gameState.players[gameState.currentIndex].name] = betVal;
       }
     }
 
     function nextPlayer() {
-      triggerVibrate(20);
-      playSound(750, 'sine', 0.1);
-
-      if (document.getElementById("opt-betting").checked) {
-        gameState.playerBets[gameState.players[gameState.currentIndex].name] = document.getElementById("player-bet-select").value;
-      }
-
       gameState.currentIndex++;
-      saveActiveGameState();
-
       if (gameState.currentIndex < gameState.players.length) {
+        saveActiveGameState();
         updateTurnUI();
       } else {
         startGameplayPhase();
@@ -1756,12 +1930,6 @@
 
     function startGameplayPhase() {
       gameState.step = "gameplay";
-      gameState.starterPlayer = gameState.players[Math.floor(Math.random() * gameState.players.length)];
-
-      if (document.getElementById("opt-wildcard").checked) {
-        gameState.wildCardText = wildCardsList[Math.floor(Math.random() * wildCardsList.length)];
-      }
-
       saveActiveGameState();
 
       hideAllSteps();
@@ -1780,6 +1948,7 @@
       if (gameState.timerSeconds > 0) {
         document.getElementById("timer-box").classList.remove("hidden");
         gameState.timerRunning = true;
+        updateTimerDisplay();
         runTimer();
       } else {
         document.getElementById("timer-box").classList.add("hidden");
@@ -1788,18 +1957,16 @@
 
     function runTimer() {
       clearInterval(timerInterval);
-      updateTimerDisplay();
       timerInterval = setInterval(() => {
-        gameState.timerSeconds--;
-        saveActiveGameState();
-        updateTimerDisplay();
-
-        if (gameState.timerSeconds <= 0) {
-          clearInterval(timerInterval);
-          gameState.timerRunning = false;
+        if (gameState.timerRunning && gameState.timerSeconds > 0) {
+          gameState.timerSeconds--;
+          updateTimerDisplay();
           saveActiveGameState();
-          triggerVibrate([200, 100, 200, 100, 400]);
-          alert("⏰ تسالى وقت النقاش!");
+          if (gameState.timerSeconds === 0) {
+            clearInterval(timerInterval);
+            playSound(300, 'square', 0.5);
+            alert("⏰ انتهى وقت النقاش والمداولة!");
+          }
         }
       }, 1000);
     }
@@ -1811,89 +1978,78 @@
     }
 
     function toggleTimerPause() {
-      if (timerInterval) { 
-        clearInterval(timerInterval); 
-        timerInterval = null; 
-        gameState.timerRunning = false;
-      } else if (gameState.timerSeconds > 0) { 
-        gameState.timerRunning = true;
-        runTimer(); 
-      }
+      gameState.timerRunning = !gameState.timerRunning;
+      document.getElementById("timer-btn").innerText = gameState.timerRunning ? "إيقاف مؤقت ⏸️" : "تشغيل ⏯️";
+      if (gameState.timerRunning) runTimer();
       saveActiveGameState();
     }
 
     function handleDiscussionEnd() {
       clearInterval(timerInterval);
-      gameState.timerRunning = false;
-
       if (document.getElementById("opt-enable-voting").checked) {
-        gameState.step = "voting";
-        gameState.votingIndex = 0;
-        saveActiveGameState();
-
-        hideAllSteps();
-        document.getElementById("voting-step").classList.remove("hidden");
-        updateVoterUI();
+        startVotingPhase();
       } else {
-        showFinalResults();
+        showResults();
       }
     }
 
+    function startVotingPhase() {
+      gameState.step = "voting";
+      gameState.votingIndex = 0;
+      saveActiveGameState();
+
+      hideAllSteps();
+      document.getElementById("voting-step").classList.remove("hidden");
+      updateVoterUI();
+    }
+
     function updateVoterUI() {
+      currentVoterSelectedTargets = [];
       const voter = gameState.players[gameState.votingIndex];
       setDynamicThemeColor(voter.color);
-      currentVoterSelectedTargets = [];
 
-      document.getElementById("voter-turn-title").innerText = `دور التصويت: ${voter.name}`;
+      document.getElementById("voter-turn-title").innerText = `دور المصوت: ${voter.name}`;
+
       const container = document.getElementById("voting-buttons-container");
       container.innerHTML = "";
 
-      gameState.players.forEach(target => {
+      gameState.players.forEach((target, i) => {
         if (target.name !== voter.name) {
-          const div = document.createElement("div");
-          div.className = "multi-vote-card";
-          div.id = `vote-card-${target.name}`;
-          div.innerHTML = `
-            <span>صوت على: <b>${target.name}</b></span>
-            <div class="checkbox-icon">✓</div>
+          container.innerHTML += `
+            <div class="multi-vote-card" onclick="toggleTargetSelection(this, '${target.name}')">
+              <span>👤 ${target.name}</span>
+              <div class="checkbox-icon">✓</div>
+            </div>
           `;
-          div.onclick = () => toggleSelectTarget(target.name, div);
-          container.appendChild(div);
         }
       });
     }
 
-    function toggleSelectTarget(targetName, el) {
+    function toggleTargetSelection(cardEl, targetName) {
       triggerVibrate(20);
-      playSound(600, 'sine', 0.05);
-
-      if (currentVoterSelectedTargets.includes(targetName)) {
+      if (cardEl.classList.contains("selected")) {
+        cardEl.classList.remove("selected");
         currentVoterSelectedTargets = currentVoterSelectedTargets.filter(t => t !== targetName);
-        el.classList.remove("selected");
       } else {
+        cardEl.classList.add("selected");
         currentVoterSelectedTargets.push(targetName);
-        el.classList.add("selected");
       }
     }
 
     function confirmMultiVote() {
-      const voterName = gameState.players[gameState.votingIndex].name;
-      gameState.votes[voterName] = [...currentVoterSelectedTargets];
-
-      triggerVibrate(30);
-      playSound(750, 'sine', 0.1);
+      const voter = gameState.players[gameState.votingIndex];
+      gameState.votes[voter.name] = currentVoterSelectedTargets;
 
       gameState.votingIndex++;
-      saveActiveGameState();
-
       if (gameState.votingIndex < gameState.players.length) {
+        saveActiveGameState();
         updateVoterUI();
       } else {
-        showFinalResults();
+        showResults();
       }
     }
 
-    function showFinalResults() {
+    function showResults() {
       gameState.step = "result";
       saveActiveGameState();
 
@@ -1904,142 +2060,95 @@
 
     function showFinalResultsUI() {
       document.getElementById("revealed-word").innerText = gameState.currentWord;
-      document.getElementById("revealed-impostors").innerText = gameState.impostorNames.join(" ، ");
+      document.getElementById("revealed-impostors").innerText = gameState.impostorNames.length > 0 ? gameState.impostorNames.join(" - ") : "لا يوجد محتال!";
 
-      const container = document.getElementById("results-ranking-container");
-      const wrapper = document.getElementById("ranking-section-wrapper");
-      container.innerHTML = "";
+      const rankWrapper = document.getElementById("ranking-section-wrapper");
+      const rankContainer = document.getElementById("results-ranking-container");
 
       if (document.getElementById("opt-enable-voting").checked && Object.keys(gameState.votes).length > 0) {
-        wrapper.classList.remove("hidden");
+        rankWrapper.classList.remove("hidden");
+        rankContainer.innerHTML = "";
+
         let voteCounts = {};
         gameState.players.forEach(p => voteCounts[p.name] = 0);
 
-        let totalVotesCast = 0;
         Object.values(gameState.votes).forEach(targetList => {
           if (Array.isArray(targetList)) {
-            targetList.forEach(target => {
-              voteCounts[target] = (voteCounts[target] || 0) + 1;
-              totalVotesCast++;
-            });
+            targetList.forEach(t => { if (voteCounts[t] !== undefined) voteCounts[t]++; });
           }
         });
 
-        let sorted = gameState.players.map(p => ({ 
-          name: p.name, 
-          color: p.color, 
-          count: voteCounts[p.name] || 0 
-        })).sort((a, b) => b.count - a.count);
+        let maxVotes = 0;
+        Object.values(voteCounts).forEach(v => { if (v > maxVotes) maxVotes = v; });
 
-        const maxVotes = sorted[0]?.count || 1;
+        let sorted = Object.keys(voteCounts).sort((a, b) => voteCounts[b] - voteCounts[a]);
 
-        sorted.forEach((item, index) => {
-          const isTopVoted = index === 0 && item.count > 0;
-          const percentage = totalVotesCast > 0 ? Math.round((item.count / totalVotesCast) * 100) : 0;
-          
-          container.innerHTML += `
-            <div class="result-rank-card ${isTopVoted ? 'top-voted' : ''}">
+        sorted.forEach(name => {
+          let count = voteCounts[name];
+          let isTop = count === maxVotes && maxVotes > 0;
+          let percent = gameState.players.length > 1 ? (count / (gameState.players.length - 1)) * 100 : 0;
+
+          rankContainer.innerHTML += `
+            <div class="result-rank-card ${isTop ? 'top-voted' : ''}">
               <div class="rank-card-header">
-                <span class="rank-player-name" style="color:${item.color}">
-                  <span style="width:10px; height:10px; border-radius:50%; background:${item.color}; display:inline-block;"></span>
-                  ${item.name}
-                  ${isTopVoted ? '<span class="top-voted-badge">🚨 الأكثر شكوكاً</span>' : ''}
-                </span>
-                <span class="rank-votes-count">${item.count} أصوات</span>
+                <div class="rank-player-name">
+                  <span>👤 ${name}</span>
+                  ${isTop ? '<span class="top-voted-badge">🔥 الأعلى شكاً</span>' : ''}
+                </div>
+                <div class="rank-votes-count">${count} أصوات</div>
               </div>
               <div class="vote-bar-track">
-                <div class="vote-bar-fill" style="width: ${percentage}%"></div>
+                <div class="vote-bar-fill" style="width: ${percent}%;"></div>
               </div>
             </div>
           `;
         });
-
-        if (document.getElementById("opt-betting").checked) {
-          gameState.players.forEach(p => {
-            if (!scores[p.name]) scores[p.name] = 0;
-            const bet = gameState.playerBets[p.name];
-            const pVotes = gameState.votes[p.name] || [];
-            
-            const guessedImpostor = pVotes.some(v => gameState.impostorNames.includes(v));
-            if (bet === 'find_impostor' && guessedImpostor) scores[p.name] += 2;
-            else if (bet === 'no_votes' && (voteCounts[p.name] || 0) === 0) scores[p.name] += 3;
-          });
-          saveScores();
-        }
       } else {
-        wrapper.classList.add("hidden");
+        rankWrapper.classList.add("hidden");
       }
     }
 
-    function addScoreToWinners(type) {
-      gameState.players.forEach(p => {
+    function addScoreToWinners(winnerType) {
+      triggerVibrate(50);
+      playSound(700, 'sine', 0.2);
+
+      gameState.players.forEach((p, i) => {
+        const isImp = gameState.playerRoles[i].type === "impostor";
         if (!scores[p.name]) scores[p.name] = 0;
-        if (type === 'innocents' && !gameState.impostorNames.includes(p.name)) scores[p.name] += 1;
-        else if (type === 'impostors' && gameState.impostorNames.includes(p.name)) scores[p.name] += 3;
+
+        if (winnerType === "innocents" && !isImp) {
+          scores[p.name] += 1;
+        } else if (winnerType === "impostors" && isImp) {
+          scores[p.name] += 3;
+        }
+
+        const bet = gameState.playerBets[p.name];
+        if (bet === "find_impostor" && winnerType === "innocents") {
+          scores[p.name] += 2;
+        } else if (bet === "no_votes") {
+          let count = 0;
+          Object.values(gameState.votes).forEach(list => {
+            if (Array.isArray(list) && list.includes(p.name)) count++;
+          });
+          if (count === 0) scores[p.name] += 3;
+        }
       });
+
       saveScores();
-      alert("تم تحديث النقاط بنجاح! 🏆");
+      alert("تمت إضافة النقاط بنجاح إلى جدول الترتيب! 🏆");
     }
 
     function resetGame() {
-      clearInterval(timerInterval);
       clearActiveGameState();
       gameState.step = "setup";
 
       hideAllSteps();
       document.getElementById("setup-step").classList.remove("hidden");
       document.getElementById("bottom-tabs-bar").classList.remove("hidden");
-      setDynamicThemeColor("#7c3aed");
-    }
 
-    function openWordsModal(catName) {
-      selectedCategoryForModal = catName;
-      document.getElementById("modal-cat-title").innerText = `كلمات تصنيف: ${catName}`;
-      renderModalWords();
-      document.getElementById("words-modal").classList.remove("hidden");
-    }
-
-    function renderModalWords() {
-      const list = database[selectedCategoryForModal] || [];
-      const container = document.getElementById("modal-words-list");
-      container.innerHTML = "";
-      list.forEach((word, idx) => {
-        container.innerHTML += `<div class="word-tag">${word} <span onclick="removeWordFromCategory(${idx})">✕</span></div>`;
-      });
-    }
-
-    function addWordToCurrentCategory() {
-      const input = document.getElementById("add-single-word-input");
-      const word = input.value.trim();
-      if (word && selectedCategoryForModal) {
-        database[selectedCategoryForModal].push(word);
-        saveDatabase();
-        renderModalWords();
-        renderCategories();
-        input.value = "";
-      }
-    }
-
-    function removeWordFromCategory(idx) {
-      if (selectedCategoryForModal && database[selectedCategoryForModal]) {
-        database[selectedCategoryForModal].splice(idx, 1);
-        saveDatabase();
-        renderModalWords();
-        renderCategories();
-      }
-    }
-
-    function closeWordsModal() { document.getElementById("words-modal").classList.add("hidden"); }
-
-    function addCustomCategory() {
-      const catName = document.getElementById("new-cat-name").value.trim();
-      const catWords = document.getElementById("new-cat-words").value.trim();
-      if (!catName || !catWords) return alert("المرجو كتابة الاسم والكلمات!");
-      database[catName] = catWords.split(",").map(w => w.trim()).filter(w => w.length > 0);
-      saveDatabase();
-      renderCategories();
-      document.getElementById("new-cat-name").value = "";
-      document.getElementById("new-cat-words").value = "";
+      document.documentElement.style.setProperty('--player-dynamic-color', '#a855f7');
+      document.getElementById("main-card").style.borderColor = "var(--card-border)";
+      document.getElementById("main-card").style.boxShadow = "0 30px 60px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0,0,0,0.3)";
     }
   </script>
 </body>
